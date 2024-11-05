@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from typing import Optional
 
-from moon_phase import upcoming_phases
+from .upcoming_phases import upcoming_phases
 
 
 def next_phase(

@@ -1,7 +1,8 @@
 from datetime import datetime, timezone
 from typing import Optional
 
-from moon_phase import next_phase, preceding_intermediate_phase
+from .next_phase import next_phase
+from .preceding_intermediate_phase import preceding_intermediate_phase
 
 
 def get_phase(dt: Optional[datetime] = None) -> str:

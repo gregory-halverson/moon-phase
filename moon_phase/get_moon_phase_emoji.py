@@ -1,7 +1,7 @@
-from moon_phase import get_phase
+from .get_phase import get_phase
 
 
-def get_emoji(phase: str = None, use_face_emojis: bool = False) -> str:
+def get_moon_phase_emoji(phase: str = None, use_face_emojis: bool = False) -> str:
     if phase is None:
         phase = get_phase()
 
