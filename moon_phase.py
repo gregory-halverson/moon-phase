@@ -227,18 +227,18 @@ def full_moons_in_month(year: Optional[int] = None, month: Optional[int] = None,
         
     return full_moons
 
-def get_moon_name(dt: datetime = None) -> str:
+def get_moon_name(
+        dt: datetime = None,
+        include_moon: bool = True) -> str:
     """
-    Determines the Farmer's Almanac moon name for a given datetime 
-    (without the word "Moon" in the name), including the "Blue Moon" rule.
-    Defaults to the current datetime in the local timezone if none is provided.
+    Determines the Farmer's Almanac moon name for a given date/time, including the "Blue Moon" rule.
 
     Args:
         dt: The datetime for which to determine the moon name. 
-            Defaults to datetime.now(timezone.utc).astimezone().
+            Defaults to the current time in the local timezone.
 
     Returns:
-        The Farmer's Almanac moon name as a string (without "Moon").
+        The moon name as a string.
     """
 
     if dt is None:
@@ -331,5 +331,10 @@ def get_moon_name(dt: datetime = None) -> str:
 
     # --- End of Special Cases ---
 
-    return moon_names.get(month)
+    moon_name = moon_names.get(month)
+
+    if include_moon:
+        moon_name += " Moon"
+
+    return moon_name
 
