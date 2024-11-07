@@ -21,5 +21,7 @@ def get_moon_phase_emoji(phase: str = None, use_face_emojis: bool = False) -> st
         emoji = "🌗"
     elif phase == "Waning Crescent":
         emoji = "🌘"
+    else:
+        raise ValueError(f"Invalid moon phase: {phase}")
 
     return emoji

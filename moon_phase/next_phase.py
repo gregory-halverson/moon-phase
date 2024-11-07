@@ -27,8 +27,8 @@ def next_phase(
 
     # Filter for datetimes strictly greater than the input datetime
     # (This might be redundant now, but it's good to keep for safety)
-    df_future = df[df['datetime'] > dt]
-    next_phase_row = df_future.iloc[0]  # Get the first row after filtering
+    # df_future = df[df['datetime'] > dt]
+    next_phase_row = df.iloc[0]  # Get the first row after filtering
 
     # Remove "Next " prefix from the lunation name
     phase_name = next_phase_row['lunation'].replace("Next ", "")
