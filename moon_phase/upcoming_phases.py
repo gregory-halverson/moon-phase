@@ -29,7 +29,7 @@ def upcoming_phases(
         dt = datetime.now(timezone.utc).astimezone()  # Current datetime in local timezone
 
     # If tz is not provided, use the timezone of the input datetime
-    if tz is None:
+    if tz is None and hasattr(dt, 'tzinfo'):
         tz = dt.tzinfo
 
     dt = ephem.Date(dt)

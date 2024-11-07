@@ -1,4 +1,5 @@
-from datetime import datetime
+from typing import Optional, Union
+from datetime import datetime, date
 import dateparser
 
 from .is_retrograde import is_retrograde
@@ -10,11 +11,20 @@ from .get_moon_status import get_moon_status
 from .get_sun_status import get_sun_status
 from .get_sign import get_sign
 
-def get_status(dt: datetime = None) -> str:
+def get_status(dt: Optional[Union[datetime, date]] = None) -> str:
     if dt is None:
         dt = datetime.now()
     elif isinstance(dt, str):
         dt = dateparser.parse(dt)
+    elif isinstance(dt, date):
+        if isinstance(dt, date):
+            if hasattr(dt, "tzinfo"):
+                tzinfo = dt.tzinfo
+            else:
+                tzinfo = datetime.now().astimezone().tzinfo
+            
+            # convert date to datetime at midnight
+            dt = datetime(dt.year, dt.month, dt.day, 0, 0, 0, 0, tzinfo=tzinfo)
 
     sun_status = get_sun_status(dt)
     roman_date = get_roman_date_string(dt)
