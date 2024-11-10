@@ -8,6 +8,7 @@ import ephem
 
 from .get_body import get_body
 from .parse_timestamp import parse_timestamp
+from .get_location import get_location
 
 def get_ecliptic_longitude(
         body: Union[ephem.Body, str],
