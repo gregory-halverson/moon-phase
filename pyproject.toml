@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "moon_phase"
 version = "0.1.0"
-description = moon-phase calculator"
+description = "moon-phase calculator"
 authors = [
     { name="Gregory H. Halverson", email="gregory.halverson@gmail.com" }
 ]
