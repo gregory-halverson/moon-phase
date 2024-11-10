@@ -3,6 +3,8 @@ from datetime import datetime
 import dateparser
 from zoneinfo import ZoneInfo
 
+from .get_timezone import get_timezone
+
 def parse_timestamp(
         timestamp: str,
         timezone: Union[ZoneInfo, str] = None,
@@ -22,6 +24,8 @@ def parse_timestamp(
         timezone = get_timezone(lat, lon)
     else:
         timezone = ZoneInfo(timezone)
+
+    print(timezone)
 
     datetime = datetime.replace(tzinfo=timezone)
 

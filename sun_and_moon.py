@@ -37,7 +37,7 @@ def main():
         longitude = g.latlng[1]
 
     if timestamp is None:
-        dt = datetime.now().astimezone().date()
+        dt = datetime.now().astimezone()
     else:
         try:
             dt = parse_timestamp(timestamp, lat=latitude, lon=longitude)
