@@ -35,10 +35,10 @@ def next_sign(
     
     current_sign = get_sign(body, current_date, timezone, lat, lon)
     sign = current_sign
-
     d = current_date
 
     while sign == current_sign:
+        print(d, sign)
         d += timedelta(days=1)
         sign = get_sign(body, d, timezone, lat, lon)
 
