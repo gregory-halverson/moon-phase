@@ -38,7 +38,6 @@ def next_sign(
     d = current_date
 
     while sign == current_sign:
-        print(d, sign)
         d += timedelta(days=1)
         sign = get_sign(body, d, timezone, lat, lon)
 
