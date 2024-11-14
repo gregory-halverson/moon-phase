@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from .get_moon_phase_emoji import get_moon_phase_emoji
 from .get_phase import get_phase
@@ -30,5 +30,14 @@ def get_moon_status(
     sign = get_moon_sign(dt, lat=lat, lon=lon)
     zodiac_emoji = get_zodiac_emoji(sign)
     
+    yesterday_sign = get_moon_sign(dt.date() - timedelta(days=1), lat=lat, lon=lon)
+    tomorrow_sign = get_moon_sign(dt.date() + timedelta(days=1), lat=lat, lon=lon)
 
-    return f"{moon_name_emoji}{moon_phase_emoji}{zodiac_emoji} {phase} {name} Moon in {sign}"
+    if yesterday_sign != sign:
+        movement_string = "enters"
+    elif tomorrow_sign != sign:
+        movement_string = "leaves"
+    else:
+        movement_string = "in"
+
+    return f"{moon_name_emoji}{moon_phase_emoji}{zodiac_emoji} {phase} {name} Moon {movement_string} {sign}"

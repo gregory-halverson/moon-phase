@@ -12,4 +12,12 @@ def get_sun_sign(
         timezone: Union[ZoneInfo, str] = None,
         lat: float = None,
         lon: float = None) -> str:
-    return get_sign(ephem.Sun(), dt, timezone, lat, lon)
+    sign = get_sign(
+        body=ephem.Sun(), 
+        dt=dt, 
+        timezone=timezone, 
+        lat=lat, 
+        lon=lon
+    )
+
+    return sign

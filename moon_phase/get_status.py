@@ -1,5 +1,5 @@
 from typing import Optional, Union
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 import dateparser
 
 from .is_retrograde import is_retrograde
@@ -40,6 +40,18 @@ def get_status(
         sign = get_sign(planet, dt, lat=lat, lon=lon)
         sign_emoji = get_zodiac_emoji(sign)
         retrograde = is_retrograde(planet, dt, lat=lat, lon=lon)
-        status += f"\n{planet_emoji}{sign_emoji} {planet} {'Retrograde ' if retrograde else ''}in {sign}"
+        retrograde_string = 'Retrograde ' if retrograde else ''
+
+        yesterday_sign = get_sign(planet, dt.date() - timedelta(days=1), lat=lat, lon=lon)
+        tomorrow_sign = get_sign(planet, dt.date() + timedelta(days=1), lat=lat, lon=lon)
+
+        if yesterday_sign != sign:
+            movement_string = "enters"
+        elif tomorrow_sign != sign:
+            movement_string = "leaves"
+        else:
+            movement_string = "in"
+
+        status += f"\n{planet_emoji}{sign_emoji} {planet} {retrograde_string}{movement_string} {sign}"
 
     return status

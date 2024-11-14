@@ -23,7 +23,14 @@ def get_sign(
     if isinstance(body, str):
         body = get_body(body)
 
-    ecliptic_longitude_degrees = get_ecliptic_longitude(body, dt, timezone, lat, lon)
+    ecliptic_longitude_degrees = get_ecliptic_longitude(
+        body=body, 
+        dt=dt, 
+        timezone=timezone, 
+        lat=lat, 
+        lon=lon
+    )
+    
     sign = tropical_zodiac_from_ecliptic_longitude(ecliptic_longitude_degrees)
 
     return sign
