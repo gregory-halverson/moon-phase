@@ -1,6 +1,8 @@
 from datetime import datetime, timezone, date
 from typing import Optional, Union
 
+import ephem
+
 from .next_phase import next_phase
 from .preceding_intermediate_phase import preceding_intermediate_phase
 
@@ -17,6 +19,9 @@ def get_phase(dt: Optional[Union[datetime, date]] = None) -> str:
         
         # convert date to datetime at midnight
         dt = datetime(dt.year, dt.month, dt.day, 0, 0, 0, 0, tzinfo=tzinfo)
+
+    if isinstance(dt, ephem.Date):
+        dt = dt.datetime()
 
     next_phase_name, next_phase_datetime = next_phase(dt)
     next_phase_date = next_phase_datetime.date()

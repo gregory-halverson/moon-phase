@@ -25,8 +25,6 @@ def parse_timestamp(
     else:
         timezone = ZoneInfo(timezone)
 
-    print(timezone)
-
     datetime = datetime.replace(tzinfo=timezone)
 
     return datetime

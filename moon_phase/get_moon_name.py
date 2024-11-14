@@ -1,10 +1,14 @@
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timezone, timedelta, date
 
 import ephem
 
+from .get_phase import get_phase
+
+# FIXME this is only valid on a Full Moon date
+# FIXME this is only valid for the Northern Hemisphere
 
 def get_moon_name(
-        dt: datetime = None,
+        d: date = None,
         include_moon: bool = True) -> str:
     """
     Determines the Farmer's Almanac moon name for a given date/time, including the "Blue Moon" rule.
@@ -17,12 +21,26 @@ def get_moon_name(
         The moon name as a string.
     """
 
-    if dt is None:
-        dt = datetime.now(timezone.utc).astimezone()
+    if d is None:
+        d = datetime.now(timezone.utc).astimezone().date()
+    
+    if isinstance(d, datetime):
+        d = d.date()
+
+    if isinstance(d, ephem.Date):
+        d = d.datetime().date()
+
+    phase = get_phase(d)
+
+    if phase != "Full":
+        if phase in ("New", "Waxing Crescent", "First Quarter", "Waxing Gibbous"):
+            return get_moon_name(ephem.next_full_moon(d), include_moon=include_moon)
+        elif phase in ("Waning Gibbous", "Last Quarter", "Waning Crescent"):
+            return get_moon_name(ephem.previous_full_moon(d), include_moon=include_moon)
 
     # Get the month and year
-    month = dt.month
-    year = dt.year
+    month = d.month
+    year = d.year
 
     # Basic moon names (without "Moon")
     moon_names = {
