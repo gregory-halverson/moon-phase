@@ -1,12 +1,17 @@
-from datetime import datetime, timezone
-from typing import Optional
+from datetime import datetime, timezone, date
+from zoneinfo import ZoneInfo
+from typing import Optional, Union
+import ephem
 
+from .process_time import process_time
 from .upcoming_phases import upcoming_phases
 
 
-def next_phase(
-        dt: Optional[datetime] = None,
-        tz: Optional[timezone] = None) -> tuple[str, datetime]:
+def find_next_phase(
+        dt: Union[ephem.Date, datetime, date, str] = None,
+        timezone: Union[ZoneInfo, str] = None,
+        lat: float = None,
+        lon: float = None) -> tuple[str, datetime]:
     """
     Calculates the next moon phase: New, First Quarter, Full, or
     Last Quarter.
@@ -14,16 +19,17 @@ def next_phase(
     Args:
         dt: The datetime from which to determine the next phase.
             Defaults to present time in the local timezone.
-        tz: The timezone for the output datetime. Defaults to the timezone of the input date/time.
+        timezone: The timezone for the output datetime. Defaults to the timezone of the input date/time.
+        lat: The latitude for the location to determine the moon phase.
+        lon: The longitude for the location to determine the moon phase.
 
     Returns:
         A tuple containing the name of the next lunation and its datetime.
     """
 
-    if dt is None:
-        dt = datetime.now(timezone.utc).astimezone()
+    dt, timezone = process_time(dt, timezone, lat, lon)
 
-    df = upcoming_phases(dt, tz)  # Use only future dates
+    df = upcoming_phases(dt, timezone, lat, lon)  # Use only future dates
 
     # Filter for datetimes strictly greater than the input datetime
     # (This might be redundant now, but it's good to keep for safety)

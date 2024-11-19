@@ -1,6 +1,6 @@
-from .get_moon_name import get_moon_name
+from .generate_moon_name import generate_moon_name
 
-def get_moon_name_emoji(moon_name: str = None) -> str:
+def generate_moon_name_emoji(moon_name: str = None) -> str:
     """
     Returns an emoji corresponding to the given moon name.
 
@@ -12,7 +12,7 @@ def get_moon_name_emoji(moon_name: str = None) -> str:
     """
 
     if moon_name is None:
-        moon_name = get_moon_name(include_moon=False)
+        moon_name = generate_moon_name(include_moon=False)
 
     if moon_name.endswith(" Moon"):
         moon_name = moon_name[:-5]
